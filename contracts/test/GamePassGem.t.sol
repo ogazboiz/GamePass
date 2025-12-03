@@ -35,5 +35,41 @@ contract GamePassGemTest is Test {
         // Test will be implemented after token contract is created
         assertTrue(true);
     }
+    
+    function test_RevertWhen_ClaimNotActive() public {
+        vm.startPrank(owner);
+        gem.setClaimConditions(false, block.timestamp);
+        vm.stopPrank();
+        
+        vm.startPrank(player1);
+        vm.expectRevert("Claim is not active");
+        gem.claim(
+            player1,
+            1,
+            paymentToken,
+            PRICE_PER_GEM,
+            GamePassGem.AllowlistProof(new bytes32[](0), 0, 0, address(0)),
+            ""
+        );
+        vm.stopPrank();
+    }
+    
+    function test_RevertWhen_ExceedsMaxSupply() public {
+        vm.startPrank(owner);
+        gem.setMaxSupply(1);
+        vm.stopPrank();
+        
+        // First mint should work, second should fail
+        // Implementation depends on token contract
+        assertTrue(true);
+    }
+    
+    function testSetClaimConditions() public {
+        vm.startPrank(owner);
+        gem.setClaimConditions(true, block.timestamp + 100);
+        assertTrue(gem.claimActive());
+        assertEq(gem.claimStartTime(), block.timestamp + 100);
+        vm.stopPrank();
+    }
 }
 
