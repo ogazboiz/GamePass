@@ -122,4 +122,25 @@ contract GamePassGem is ERC721URIStorage, Ownable, ReentrancyGuard {
         
         emit TokensClaimed(0, msg.sender, _receiver, startTokenId, _quantity);
     }
+    
+    /**
+     * @dev Set claim conditions (only owner)
+     * @param _active Whether claiming is active
+     * @param _startTime When claiming can start
+     */
+    function setClaimConditions(bool _active, uint256 _startTime) external onlyOwner {
+        claimActive = _active;
+        claimStartTime = _startTime;
+        emit ClaimConditionsUpdated(_active, _startTime);
+    }
+    
+    /**
+     * @dev Set max supply (only owner)
+     * @param _maxSupply New maximum supply
+     */
+    function setMaxSupply(uint256 _maxSupply) external onlyOwner {
+        require(_maxSupply >= _tokenIdCounter - 1, "Max supply cannot be less than current supply");
+        require(_maxSupply > 0, "Max supply must be greater than 0");
+        maxSupply = _maxSupply;
+    }
 
