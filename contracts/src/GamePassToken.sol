@@ -100,4 +100,17 @@ contract GamePassToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, Reentran
         
         emit RewardsContractUpdated(oldContract, _rewardsContract);
     }
+    
+    /**
+     * @dev Set the swap contract address (only owner)
+     * @param _swapContract Address of the new swap contract
+     */
+    function setSwapContract(address _swapContract) external onlyOwner {
+        require(_swapContract != address(0), "Swap contract cannot be zero address");
+        
+        address oldContract = swapContract;
+        swapContract = _swapContract;
+        
+        emit SwapContractUpdated(oldContract, _swapContract);
+    }
 
