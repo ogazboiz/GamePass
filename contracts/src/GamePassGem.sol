@@ -143,4 +143,22 @@ contract GamePassGem is ERC721URIStorage, Ownable, ReentrancyGuard {
         require(_maxSupply > 0, "Max supply must be greater than 0");
         maxSupply = _maxSupply;
     }
+    
+    /**
+     * @dev Get total supply of minted Gems
+     * @return Total number of Gems minted
+     */
+    function totalSupply() external view returns (uint256) {
+        return _tokenIdCounter - 1;
+    }
+    
+    /**
+     * @dev Override base URI function
+     * @param tokenId Token ID
+     * @return Token URI
+     */
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
+        return super.tokenURI(tokenId);
+    }
 
