@@ -140,4 +140,19 @@ contract GamePassToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, Reentran
     function unpause() external onlyOwner {
         _unpause();
     }
+    
+    /**
+     * @dev Override _update to include pause functionality
+     * @param from Address tokens are transferred from
+     * @param to Address tokens are transferred to
+     * @param value Amount of tokens transferred
+     */
+    function _update(
+        address from,
+        address to,
+        uint256 value
+    ) internal override(ERC20, ERC20Pausable) {
+        super._update(from, to, value);
+    }
+}
 
