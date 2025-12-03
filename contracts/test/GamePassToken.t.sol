@@ -279,3 +279,59 @@ contract GamePassTokenTest is Test {
         token.setTreasury(address(0));
         vm.stopPrank();
     }
+    
+    // ============ Event Tests ============
+    
+    function test_RewardsContractUpdatedEvent() public {
+        vm.startPrank(owner);
+        
+        vm.expectEmit(true, true, false, false);
+        emit GamePassToken.RewardsContractUpdated(address(0), rewardsContract);
+        token.setRewardsContract(rewardsContract);
+        
+        address newRewardsContract = address(8);
+        vm.expectEmit(true, true, false, false);
+        emit GamePassToken.RewardsContractUpdated(rewardsContract, newRewardsContract);
+        token.setRewardsContract(newRewardsContract);
+        
+        vm.stopPrank();
+    }
+    
+    function test_SwapContractUpdatedEvent() public {
+        vm.startPrank(owner);
+        
+        vm.expectEmit(true, true, false, false);
+        emit GamePassToken.SwapContractUpdated(address(0), swapContract);
+        token.setSwapContract(swapContract);
+        
+        address newSwapContract = address(9);
+        vm.expectEmit(true, true, false, false);
+        emit GamePassToken.SwapContractUpdated(swapContract, newSwapContract);
+        token.setSwapContract(newSwapContract);
+        
+        vm.stopPrank();
+    }
+    
+    function test_TreasuryUpdatedEvent() public {
+        address newTreasury = address(10);
+        
+        vm.startPrank(owner);
+        vm.expectEmit(true, true, false, false);
+        emit GamePassToken.TreasuryUpdated(treasury, newTreasury);
+        token.setTreasury(newTreasury);
+        vm.stopPrank();
+    }
+    
+    function test_TokensMintedEvent() public {
+        vm.startPrank(owner);
+        token.setRewardsContract(rewardsContract);
+        vm.stopPrank();
+        
+        uint256 mintAmount = 1000 * 10**18;
+        
+        vm.startPrank(rewardsContract);
+        vm.expectEmit(true, false, false, true);
+        emit GamePassToken.TokensMinted(user1, mintAmount, rewardsContract);
+        token.mint(user1, mintAmount);
+        vm.stopPrank();
+    }
