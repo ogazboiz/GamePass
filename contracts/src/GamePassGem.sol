@@ -13,6 +13,10 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
  * @dev ERC721 NFT contract for GamePass play-to-earn game
  * Compatible with Celo network
  * NFTs are referred to as "GEMS" in the game
+ * 
+ * Players must mint one Gem NFT (costs 34 PASS tokens) to unlock all games
+ * One Gem unlocks access to all available games in the platform
+ * Gems are transferable ERC721 tokens that can be traded or sold
  */
 contract GamePassGem is ERC721URIStorage, Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
