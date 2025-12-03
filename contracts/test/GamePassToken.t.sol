@@ -38,3 +38,20 @@ contract GamePassTokenTest is Test {
         assertEq(token.symbol(), "PASS", "Token symbol should be correct");
         assertEq(token.MAX_SUPPLY(), MAX_SUPPLY, "Max supply should be 1 billion tokens");
     }
+    
+    // ============ Minting Tests ============
+    
+    function test_MintingFromRewardsContract() public {
+        vm.startPrank(owner);
+        token.setRewardsContract(rewardsContract);
+        vm.stopPrank();
+        
+        uint256 mintAmount = 1000 * 10**18;
+        
+        vm.startPrank(rewardsContract);
+        token.mint(user1, mintAmount);
+        vm.stopPrank();
+        
+        assertEq(token.balanceOf(user1), mintAmount, "User1 should receive minted tokens");
+        assertEq(token.totalSupply(), TREASURY_INITIAL_SUPPLY + mintAmount, "Total supply should increase");
+    }
