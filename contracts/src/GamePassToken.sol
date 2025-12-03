@@ -32,4 +32,16 @@ contract GamePassToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, Reentran
     
     /// @dev Treasury address that receives initial supply
     address public treasury;
+    
+    /// @dev Event emitted when rewards contract is updated
+    event RewardsContractUpdated(address indexed oldContract, address indexed newContract);
+    
+    /// @dev Event emitted when swap contract is updated
+    event SwapContractUpdated(address indexed oldContract, address indexed newContract);
+    
+    /// @dev Event emitted when treasury is updated
+    event TreasuryUpdated(address indexed oldTreasury, address indexed newTreasury);
+    
+    /// @dev Event emitted when tokens are minted
+    event TokensMinted(address indexed to, uint256 amount, address indexed minter);
 
