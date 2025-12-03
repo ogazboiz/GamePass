@@ -131,6 +131,31 @@ contract GamePassTokenTest is Test {
         assertEq(token.balanceOf(user1), remainingSupply, "User1 should receive remaining supply");
     }
     
+    // ============ Max Supply Limit Tests ============
+    
+    function test_MaxSupplyLimit() public {
+        assertEq(token.MAX_SUPPLY(), MAX_SUPPLY, "Max supply constant should be correct");
+        
+        vm.startPrank(owner);
+        token.setRewardsContract(rewardsContract);
+        vm.stopPrank();
+        
+        uint256 remainingSupply = MAX_SUPPLY - TREASURY_INITIAL_SUPPLY;
+        
+        // Try to mint exactly the remaining supply
+        vm.startPrank(rewardsContract);
+        token.mint(user1, remainingSupply);
+        vm.stopPrank();
+        
+        assertEq(token.totalSupply(), MAX_SUPPLY, "Should reach exactly max supply");
+        
+        // Try to mint one more token (should fail)
+        vm.startPrank(rewardsContract);
+        vm.expectRevert("Exceeds max supply");
+        token.mint(user1, 1);
+        vm.stopPrank();
+    }
+    
     // ============ Pause Functionality Tests ============
     
     function test_PauseUnpause() public {
