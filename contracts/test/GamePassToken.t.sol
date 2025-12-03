@@ -81,3 +81,52 @@ contract GamePassTokenTest is Test {
         assertEq(token.balanceOf(user1), mintAmount, "User1 should receive minted tokens");
         assertEq(token.totalSupply(), TREASURY_INITIAL_SUPPLY + mintAmount, "Total supply should increase");
     }
+    
+    function test_RevertWhen_MintingExceedsMaxSupply() public {
+        vm.startPrank(owner);
+        token.setRewardsContract(rewardsContract);
+        vm.stopPrank();
+        
+        uint256 remainingSupply = MAX_SUPPLY - TREASURY_INITIAL_SUPPLY;
+        uint256 excessAmount = remainingSupply + 1;
+        
+        vm.startPrank(rewardsContract);
+        vm.expectRevert("Exceeds max supply");
+        token.mint(user1, excessAmount);
+        vm.stopPrank();
+    }
+    
+    function test_RevertWhen_MintingToZeroAddress() public {
+        vm.startPrank(owner);
+        token.setRewardsContract(rewardsContract);
+        vm.stopPrank();
+        
+        uint256 mintAmount = 1000 * 10**18;
+        
+        vm.startPrank(rewardsContract);
+        vm.expectRevert("Cannot mint to zero address");
+        token.mint(address(0), mintAmount);
+        vm.stopPrank();
+    }
+    
+    function test_RevertWhen_UnauthorizedMinting() public {
+        vm.startPrank(user1);
+        vm.expectRevert("Not authorized to mint");
+        token.mint(user2, 1000 * 10**18);
+        vm.stopPrank();
+    }
+    
+    function test_MintingUpToMaxSupply() public {
+        vm.startPrank(owner);
+        token.setRewardsContract(rewardsContract);
+        vm.stopPrank();
+        
+        uint256 remainingSupply = MAX_SUPPLY - TREASURY_INITIAL_SUPPLY;
+        
+        vm.startPrank(rewardsContract);
+        token.mint(user1, remainingSupply);
+        vm.stopPrank();
+        
+        assertEq(token.totalSupply(), MAX_SUPPLY, "Total supply should equal max supply");
+        assertEq(token.balanceOf(user1), remainingSupply, "User1 should receive remaining supply");
+    }
