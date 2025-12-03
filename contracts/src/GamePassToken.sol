@@ -66,4 +66,25 @@ contract GamePassToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable, Reentran
         
         emit TokensMinted(treasury, treasuryAmount, msg.sender);
     }
+    
+    /**
+     * @dev Mint tokens to an address
+     * Can only be called by rewards contract, swap contract, or owner
+     * @param _to Address to receive the tokens
+     * @param _amount Amount of tokens to mint
+     */
+    function mint(address _to, uint256 _amount) external nonReentrant {
+        require(
+            msg.sender == rewardsContract || 
+            msg.sender == swapContract || 
+            msg.sender == owner(),
+            "Not authorized to mint"
+        );
+        require(_to != address(0), "Cannot mint to zero address");
+        require(totalSupply() + _amount <= MAX_SUPPLY, "Exceeds max supply");
+        
+        _mint(_to, _amount);
+        
+        emit TokensMinted(_to, _amount, msg.sender);
+    }
 
