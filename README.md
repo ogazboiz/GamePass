@@ -20,3 +20,7 @@ Play multiple games. Earn rewards. Own your progress.
 ## What You Get
 
 You play various games. You score points. You earn PASS tokens. Top players win more. Your scores stay on blockchain. Your rewards stay in your wallet.
+
+## How It Works
+
+Connect your wallet. Buy PASS tokens with CELO or cUSD. Mint one Gem NFT. Play games. Submit scores. Compete for rewards.
