@@ -1,6 +1,7 @@
 # GitHub Issues
 GITHUB_ISSUES.md
 COMMIT_PLAN_*.md
+PR_DESCRIPTION_*.md
 
 # Environment variables
 .env
