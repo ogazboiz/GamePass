@@ -62,3 +62,7 @@ Reaction Time: Wait for color change. Click as fast as possible. Measure reactio
 First place wins 40 percent of prize pool. Second place wins 25 percent. Third place wins 15 percent. Places four through ten split 10 percent. All players split 10 percent participation rewards.
 
 Minimum score is 10 points to qualify.
+
+## MiniPay Integration
+
+MiniPay users get special features. Automatic wallet detection. cUSD balance display. cUSD payment option. Low transaction fees. Add cash button for quick funding.
