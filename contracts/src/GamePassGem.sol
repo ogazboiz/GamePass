@@ -102,7 +102,6 @@ contract GamePassGem is ERC721URIStorage, Ownable, ReentrancyGuard {
     ) external payable nonReentrant {
         require(claimActive, "Claim is not active");
         require(block.timestamp >= claimStartTime, "Claim has not started");
-        require(_quantity > 0, "Quantity must be greater than 0");
         require(_quantity == 1, "Can only claim one Gem at a time");
         require(_tokenIdCounter + _quantity - 1 <= maxSupply, "Exceeds max supply");
         require(_currency == paymentToken, "Invalid payment token");
