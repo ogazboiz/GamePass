@@ -65,3 +65,31 @@ Get testnet tokens before deploying:
 - Google Cloud Faucet: https://cloud.google.com/application/web3/faucet/celo/sepolia
 
 You need CELO for gas fees.
+
+## Deployment
+
+### Deploy All Contracts
+
+Deploy everything to Celo Sepolia:
+
+```bash
+forge script script/Deploy.s.sol:DeployScript --rpc-url celo-sepolia --broadcast --verify
+```
+
+This deploys all four contracts. Sets up relationships. Activates claim conditions. Verifies on Blockscout.
+
+### Deploy Token and Swap Only
+
+Deploy latest contracts with cUSD support:
+
+```bash
+forge script script/DeployTokenAndSwap.s.sol:DeployTokenAndSwapScript --rpc-url celo-sepolia --broadcast --verify
+```
+
+This deploys new token and swap contracts. Includes cUSD payment support.
+
+### Deploy to Mainnet
+
+```bash
+forge script script/Deploy.s.sol:DeployScript --rpc-url celo --broadcast --verify
+```
