@@ -56,3 +56,12 @@ Important notes:
 - Private key must include 0x prefix
 - Treasury address receives initial 500M PASS tokens
 - Etherscan API key works for Celo Mainnet and Celo Sepolia
+
+## Get Testnet Tokens
+
+Get testnet tokens before deploying:
+
+- Celo Sepolia Faucet: https://faucet.celo.org/celo-sepolia
+- Google Cloud Faucet: https://cloud.google.com/application/web3/faucet/celo/sepolia
+
+You need CELO for gas fees.
